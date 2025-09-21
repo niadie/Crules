@@ -39,16 +39,17 @@ def convert_domain_rules(url, output_file):
         # 跳过空行、注释或 payload: 行
         if not line.strip() or line.startswith('#') or line.strip() == 'payload:':
             continue
-        # 移除可能的 - '+ 和 ' 字符，清理域名
-        cleaned_line = re.sub(r'^- \'\+|\'$', '', line.strip())
-        # 移除 *. 前缀
-        cleaned_line = re.sub(r'^\*\.', '', cleaned_line)
-        # 跳过空行或无效内容
-        if not cleaned_line:
-            continue
-        # 添加 DOMAIN-SUFFIX 前缀
-        converted_line = f"DOMAIN-SUFFIX,{cleaned_line}"
-        converted_lines.append(converted_line)
+        # 匹配 - ' 开头的行，移除 - ' 和末尾 '
+        match = re.match(r'^- \'(.+?)\'$', line.strip())
+        if match:
+            domain = match.group(1)
+            # 判断是否为 + 开头（DOMAIN-SUFFIX），否则为 DOMAIN
+            if domain.startswith('+'):
+                cleaned_domain = domain[1:]  # 移除 + 
+                converted_line = f"DOMAIN-SUFFIX,{cleaned_domain}"
+            else:
+                converted_line = f"DOMAIN,{domain}"
+            converted_lines.append(converted_line)
     
     # 保存到文件
     output_path = os.path.join(output_dir, output_file)
