@@ -36,11 +36,16 @@ def convert_domain_rules(url, output_file):
     converted_lines = []
     
     for line in lines:
-        # 跳过空行或注释
-        if not line.strip() or line.startswith('#'):
+        # 跳过空行、注释或 payload: 行
+        if not line.strip() or line.startswith('#') or line.strip() == 'payload:':
             continue
+        # 移除可能的 - '+ 和 ' 字符，清理域名
+        cleaned_line = re.sub(r'^- \'\+|\'$', '', line.strip())
         # 移除 *. 前缀
-        cleaned_line = re.sub(r'^\*\.', '', line.strip())
+        cleaned_line = re.sub(r'^\*\.', '', cleaned_line)
+        # 跳过空行或无效内容
+        if not cleaned_line:
+            continue
         # 添加 DOMAIN-SUFFIX 前缀
         converted_line = f"DOMAIN-SUFFIX,{cleaned_line}"
         converted_lines.append(converted_line)
@@ -62,11 +67,16 @@ def convert_ip_rules(url, output_file):
     converted_lines = []
     
     for line in lines:
-        # 跳过空行或注释
-        if not line.strip() or line.startswith('#'):
+        # 跳过空行、注释或 payload: 行
+        if not line.strip() or line.startswith('#') or line.strip() == 'payload:':
+            continue
+        # 移除可能的 - ' 和 ' 字符，清理 IP
+        cleaned_line = re.sub(r'^- \'|\'$', '', line.strip())
+        # 跳过空行或无效内容
+        if not cleaned_line:
             continue
         # 添加 IP-CIDR 前缀和 ,no-resolve 后缀
-        converted_line = f"IP-CIDR,{line.strip()},no-resolve"
+        converted_line = f"IP-CIDR,{cleaned_line},no-resolve"
         converted_lines.append(converted_line)
     
     # 保存到文件
