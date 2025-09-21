@@ -1,14 +1,14 @@
-DOMAIN-SUFFIX,- 'instant.arubanetworks.com
-DOMAIN-SUFFIX,- 'setmeup.arubanetworks.com
-DOMAIN-SUFFIX,- 'asusrouter.com
-DOMAIN-SUFFIX,- 'router.asus.com
-DOMAIN-SUFFIX,- 'www.asusrouter.com
-DOMAIN-SUFFIX,- 'oasisauth.h3c.com
-DOMAIN-SUFFIX,- 'routerlogin.com
-DOMAIN-SUFFIX,- 'www.routerlogin.com
-DOMAIN-SUFFIX,- 'tplogin.cn
-DOMAIN-SUFFIX,- 'miwifi.com
-DOMAIN-SUFFIX,- 'www.miwifi.com
+DOMAIN,instant.arubanetworks.com
+DOMAIN,setmeup.arubanetworks.com
+DOMAIN,asusrouter.com
+DOMAIN,router.asus.com
+DOMAIN,www.asusrouter.com
+DOMAIN,oasisauth.h3c.com
+DOMAIN,routerlogin.com
+DOMAIN,www.routerlogin.com
+DOMAIN,tplogin.cn
+DOMAIN,miwifi.com
+DOMAIN,www.miwifi.com
 DOMAIN-SUFFIX,.internal
 DOMAIN-SUFFIX,.localdomain
 DOMAIN-SUFFIX,.example
