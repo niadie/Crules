@@ -45,7 +45,8 @@ def convert_domain_rules(url, output_file):
             domain = match.group(1)
             # 判断是否为 + 开头（DOMAIN-SUFFIX），否则为 DOMAIN
             if domain.startswith('+'):
-                cleaned_domain = domain[1:]  # 移除 + 
+                cleaned_domain = domain[1:]  # 移除 +
+                cleaned_domain = cleaned_domain.lstrip('.')  # 移除开头的 .
                 converted_line = f"DOMAIN-SUFFIX,{cleaned_domain}"
             else:
                 converted_line = f"DOMAIN,{domain}"
